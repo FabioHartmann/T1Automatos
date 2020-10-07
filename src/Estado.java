@@ -17,11 +17,7 @@ public class Estado {
     public char getName() {
         return name;
     }
-
-    public void setName(char name) {
-        this.name = name;
-    }
-
+    
     public Estado(Status status, char name) {
         this.name = name;
         this.status = status;
