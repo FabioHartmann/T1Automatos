@@ -115,26 +115,31 @@ public class Automato {
      * Método que executa o automato
      */
     public void executaAutomato() throws Exception {
+        //Lê o arquivo de input
         String path = FileSystems.getDefault().getPath("src", "input").toAbsolutePath().toString();
         Scanner input = new Scanner(new FileReader(path)).useDelimiter("\\n");
-        //Lê o arquivo de input
-        Estado state = this.findByIndex(0);
-        //Seleciona o estado inicial
+
+        //Itera pela lista de inputs
         while (input.hasNext()){
-            //Itera pela lista de inputs
             String line = input.nextLine();
 
-            if (!alfabeto.contains(line)) {
-                throw new Exception("Invalid entry");
+            //Seleciona o estado inicial
+            Estado state = this.findByIndex(0);
+
+            for (Character ch : line.toCharArray()) {
+                String entry = ch.toString();
+                if (!alfabeto.contains(entry)) {
+                    throw new Exception("Invalid entry");
+                }
+                /*
+                 * Seleciona a transição, pra cada linha do input,
+                 *  seta o estado atual pelo findByName passando o nome do estado da transição 0
+                 */
+                state = this.findByName(state.getTransition(entry));
             }
-            /*
-             * Seleciona a transição, pra cada linha do input,
-             *  seta o estado atual pelo findByName passando o nome do estado da transição 0
-             */
-            state = this.findByName(state.getTransition(line));
+            if(state.getStatus() == Status.FINAL) System.out.println("Success");
+            else System.out.println("Fails");
         }
-        if(state.getStatus() == Status.FINAL) System.out.println("Success");
-        else System.out.println("Fails");
     }
 
 }
