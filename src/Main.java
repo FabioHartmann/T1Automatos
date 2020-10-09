@@ -9,6 +9,11 @@ public class Main {
 
         Automato automato = new Automato(scanner);
 
-        automato.executaAutomato();
+        try {
+            automato.executaAutomato();
+
+        } catch (Exception e) {
+            System.out.println("Fails" + e.getMessage());
+        }
     }
 }
